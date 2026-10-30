@@ -34,6 +34,21 @@ Al final, combinando todos los parciales:
 
 Los parciales se **suman** (no se promedian medias): por eso no importa que cada lote tenga distinta cantidad de archivos.
 
+### Dataset real (verificado)
+- 131 archivos sueltos en un solo directorio (sin subcarpetas), ~333k líneas en total.
+- Nombres: `x<palo><nn>[i].csv` → ej. `xclub01.csv`, `xclub02i.csv`, `xdiamond23i.csv`. El palo se saca del prefijo `x<palo>`.
+- Encabezado `timestamp,x,y,polarity`, timestamps enteros (µs) y crecientes, fin de línea LF.
+- Tamaño por archivo muy desigual: de ~370 líneas (`xclub22i`) a ~5400 (`xspade02`).
+- **Valores esperados** (calculados con awk sobre el dataset completo, sirven para validar):
+
+```
+clase,archivos,intervalos,media_us,std_us
+club,30,68615,5.836013,11.557427
+diamond,43,97473,7.580930,12.723686
+heart,23,56085,4.603869,13.593044
+spade,35,110406,6.149847,14.042695
+```
+
 ## 2. Salida: `resultados.csv`
 
 ```
