@@ -28,22 +28,16 @@ public class Main {
         int tamañoBuffer = Integer.parseInt(args[1]);
         int cantidadWorkers = Integer.parseInt(args[2]);
         int tamañoLote = Integer.parseInt(args[3]);
-
-        if (tamañoBuffer < 1 || cantidadWorkers < 1 || tamañoLote < 1) {
-            System.err.println("El tamaño del buffer, la cantidad de workers y el tamaño de lote deben ser mayores a 0.");
-            System.exit(1);
-        }
-
         List<List<File>> lotes = armarLotes(listarCsv(directorio), tamañoLote);
         Buffer buffer = new Buffer(tamañoBuffer);
         Resultados resultados = new Resultados();
         WorkerCounter contador = new WorkerCounter(cantidadWorkers);
-        ThreadPool pool = new ThreadPool(cantidadWorkers, buffer, contador);
+        ThreadPool threadPool = new ThreadPool(cantidadWorkers, buffer, contador);
 
         //inicia la toma de tiempo del procesamiento
         long inicio = System.nanoTime();
 
-        pool.iniciar();
+        threadPool.iniciar();
 
         for (List<File> lote : lotes) {
             buffer.producir(new StatsTask(lote, resultados));
@@ -55,11 +49,10 @@ public class Main {
 
         contador.esperarFin();
 
-        int cantPalos = Resultados.PALOS.length;
-        Acumulador[] totales = new Acumulador[cantPalos];
-        double[] medias = new double[cantPalos];
-        double[] desvios = new double[cantPalos];
-        for (int i = 0; i < cantPalos; i++) {
+        Acumulador[] totales = new Acumulador[4];
+        double[] medias = new double[4];
+        double[] desvios = new double[4];
+        for (int i = 0; i < 4; i++) {
             totales[i] = resultados.getTotal(i);
             medias[i] = totales[i].media();
             desvios[i] = totales[i].desvio();
