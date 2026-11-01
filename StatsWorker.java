@@ -1,3 +1,6 @@
+/**
+ * Es thread que consume tareas del buffer
+ */
 class StatsWorker extends Thread {
 
     private final Buffer buffer;
@@ -8,6 +11,9 @@ class StatsWorker extends Thread {
         this.contador = contador;
     }
 
+    /**
+     * Bucle que consume tareas del buffer hasta que consuma un PoisonPill
+     */
     @Override
     public void run() {
         try {
@@ -19,6 +25,7 @@ class StatsWorker extends Thread {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         } finally {
+            //Notifica al WorkerCounter que finalizo
             contador.workerTermino();
         }
     }
