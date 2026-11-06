@@ -19,7 +19,7 @@ class ThreadPool {
         this.contador = contador;
     }
 
-    /** Incia e inicia los StatsWorker*/
+    /** Instancia e inicia los StatsWorker*/
     public void iniciar() {
         for (int i = 0; i < cantidadWorkers; i++) {
             new StatsWorker(buffer, contador).start();

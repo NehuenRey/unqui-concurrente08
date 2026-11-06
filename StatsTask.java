@@ -25,7 +25,7 @@ class StatsTask extends Task {
     @Override
     public void run() {
         // crea un listado local de acumuladores
-        Acumulador[] locales = new Acumulador[Resultados.PALOS.length];
+        Acumulador[] locales = new Acumulador[4];
         for (int i = 0; i < locales.length; i++) {
             locales[i] = new Acumulador();
         }

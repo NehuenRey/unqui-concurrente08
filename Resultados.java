@@ -8,7 +8,7 @@ class Resultados {
     static final String[] PALOS = {"club", "diamond", "heart", "spade"};
 
     // totales[i] contiene las sumas globales del símbolo PALOS[i]
-    private final Acumulador[] totales = new Acumulador[PALOS.length];
+    private final Acumulador[] totales = new Acumulador[4];
 
     public Resultados() {
         for (int i = 0; i < totales.length; i++) {
