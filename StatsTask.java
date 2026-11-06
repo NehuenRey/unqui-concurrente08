@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.List;
 
 /**
@@ -37,7 +36,7 @@ class StatsTask extends Task {
             try {
                 locales[palo].sumar(procesarArchivo(archivo));
             } catch (IOException e) {
-                throw new UncheckedIOException("Error leyendo " + archivo, e);
+                throw new RuntimeException(e);
             }
         }
         // agrega los resultados del procesamiento del lote
@@ -90,11 +89,12 @@ class StatsTask extends Task {
      * @return el indice numerico del palo
      */
     private int indiceDelPalo(String nombreArchivo) {
-        for (int i = 0; i < Resultados.PALOS.length; i++) {
-            if (nombreArchivo.startsWith("x" + Resultados.PALOS[i])) {
-                return i;
-            }
+        switch (nombreArchivo.charAt(1)) {
+            case 'c': return 0; // club
+            case 'd': return 1; // diamond
+            case 'h': return 2; // heart
+            default:  return 3; // spade
         }
-        throw new IllegalArgumentException("Archivo con palo desconocido: " + nombreArchivo);
-    }
+}
+
 }
